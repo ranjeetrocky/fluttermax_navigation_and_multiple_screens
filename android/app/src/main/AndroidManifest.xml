@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fluttermax_navigation_and_multiple_screens">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="fluttermax_navigation_and_multiple_screens"
+        android:label="Daily Meals"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
