@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttermax_navigation_and_multiple_screens/screens/categories_screen.dart';
-import 'package:fluttermax_navigation_and_multiple_screens/screens/category_meal_screen.dart';
-import 'package:fluttermax_navigation_and_multiple_screens/screens/meal_detail_screen.dart';
+import './screens/categories_screen.dart';
+import './screens/category_meal_screen.dart';
+import './screens/meal_detail_screen.dart';
+import './screens/tabs_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,10 +51,12 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData(
         colorSchemeSeed: _seedColor,
         brightness: Brightness.dark,
+        useMaterial3: true,
         // listTileTheme: const ListTileThemeData(textColor: Colors.black),
       ),
       theme: ThemeData(
         // primarySwatch: Colors.pink,
+        useMaterial3: true,
         colorSchemeSeed: _seedColor,
         canvasColor: const Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
@@ -84,10 +87,10 @@ class _MyAppState extends State<MyApp> {
               SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         ),
       ),
-      // home: const CategoriesScreen(),
       routes: {
-        CategoriesScreen.routeName: (context) =>
-            CategoriesScreen(changeColor: _changeColor),
+        CategoriesScreen.routeName: (context) => const CategoriesScreen(),
+        TabsScreen.routeName: (context) =>
+            TabsScreen(changeColor: _changeColor),
         CategoryMealScreen.routeName: (context) => const CategoryMealScreen(),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
       },
@@ -100,16 +103,12 @@ class _MyAppState extends State<MyApp> {
         // }
         //for dynamically generate routes in web
         return MaterialPageRoute(
-          builder: (context) => CategoriesScreen(
-            changeColor: _changeColor,
-          ),
+          builder: (context) => TabsScreen(changeColor: _changeColor),
         );
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => CategoriesScreen(
-            changeColor: _changeColor,
-          ),
+          builder: (context) => TabsScreen(changeColor: _changeColor),
         );
 
         ///for making 404 page in flutter web

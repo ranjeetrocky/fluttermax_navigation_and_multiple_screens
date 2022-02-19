@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttermax_navigation_and_multiple_screens/dummy_data.dart';
-import 'package:fluttermax_navigation_and_multiple_screens/widgets/meal_item.dart';
+import '../dummy_data.dart';
+import '../widgets/meal_item.dart';
 
 class CategoryMealScreen extends StatelessWidget {
   static const routeName = '/category-meals';
