@@ -9,8 +9,8 @@ class CategoryItem extends StatelessWidget {
       : super(key: key);
 
   void _selectCategory(context) {
-    Navigator.of(context)
-        .pushNamed('/category-meals', arguments: {'id': id, 'title': title});
+    Navigator.of(context).pushNamed(CategoryMealScreen.routeName,
+        arguments: {'id': id, 'title': title});
   }
 
   @override

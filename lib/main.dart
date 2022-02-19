@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: const CategoriesScreen(),
       routes: {
-        '/': (context) => const CategoriesScreen(),
-        '/category-meals': (context) => CategoryMealScreen(),
+        CategoriesScreen.routeName: (context) => const CategoriesScreen(),
+        CategoryMealScreen.routeName: (context) => CategoryMealScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
