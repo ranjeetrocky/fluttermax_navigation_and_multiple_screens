@@ -17,10 +17,10 @@ class MealDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             height: 300,
             width: double.infinity,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Hero(
-                tag: selectedMeal.id,
+            child: Hero(
+              tag: selectedMeal.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
                 child: Image.network(
                   selectedMeal.imageUrl,
                   fit: BoxFit.cover,
