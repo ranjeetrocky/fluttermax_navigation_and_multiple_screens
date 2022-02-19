@@ -10,50 +10,73 @@ class MealDetailScreen extends StatelessWidget {
     final mealId = ModalRoute.of(context)?.settings.arguments;
     final selectedMeal = kDummyMeals.firstWhere((meal) => meal.id == mealId);
     return Scaffold(
-      appBar: AppBar(title: Text(selectedMeal.title)),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            height: 300,
-            width: double.infinity,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Hero(
-                tag: selectedMeal.id,
-                child: Image.network(
-                  selectedMeal.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+      // appBar: AppBar(title: Text(selectedMeal.title)),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 120,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
+                selectedMeal.title,
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ),
-          _sectionTitle(context, 'Ingredients'),
-          _sectionContainer(
-              child: ListView.builder(
-            itemBuilder: (context, index) {
-              return Card(
-                child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(selectedMeal.ingredients[index])),
-              );
-            },
-            itemCount: selectedMeal.ingredients.length,
-          )),
-          _sectionTitle(context, "Steps"),
-          _sectionContainer(
-            child: ListView.separated(
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text('# ${index + 1}'),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                print(index);
+                return Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        height: 300,
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Hero(
+                            tag: selectedMeal.id,
+                            child: Image.network(
+                              selectedMeal.imageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      _sectionTitle(context, 'Ingredients'),
+                      // _sectionContainer(
+                      //     child: ListView.builder(
+                      //   itemBuilder: (context, index) {
+                      //     return Card(
+                      //       child: Padding(
+                      //           padding: const EdgeInsets.symmetric(
+                      //               horizontal: 10, vertical: 5),
+                      //           child: Text(selectedMeal.ingredients[index])),
+                      //     );
+                      //   },
+                      //   itemCount: selectedMeal.ingredients.length,
+                      // )),
+                      _sectionTitle(context, "Steps"),
+                      // _sectionContainer(
+                      //   child: ListView.separated(
+                      //     separatorBuilder: (context, index) => const Divider(),
+                      //     itemBuilder: (context, index) {
+                      //       return ListTile(
+                      //         leading: CircleAvatar(
+                      //           child: Text('# ${index + 1}'),
+                      //         ),
+                      //         title: Text(selectedMeal.steps[index]),
+                      //       );
+                      //     },
+                      //     itemCount: selectedMeal.steps.length,
+                      //   ),
+                      // ),
+                    ],
                   ),
-                  title: Text(selectedMeal.steps[index]),
                 );
               },
-              itemCount: selectedMeal.steps.length,
             ),
           ),
         ],
@@ -64,6 +87,7 @@ class MealDetailScreen extends StatelessWidget {
   Expanded _sectionContainer({required child}) {
     return Expanded(
       child: Container(
+        height: 100,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey),
