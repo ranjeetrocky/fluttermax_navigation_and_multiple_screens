@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/categories_screen.dart';
@@ -6,6 +8,16 @@ import 'package:fluttermax_navigation_and_multiple_screens/screens/category_meal
 void main() {
   runApp(const MyApp());
 }
+
+const themeSeedColors = [
+  Colors.pink,
+  Colors.red,
+  Colors.green,
+  Colors.blue,
+  Colors.teal,
+  Colors.blueGrey,
+  Colors.purple
+];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Navigation & Multiple Screen Demo',
       theme: ThemeData(
         // primarySwatch: Colors.pink,
-        colorSchemeSeed: Colors.pink,
+        colorSchemeSeed: themeSeedColors[Random().nextInt(7)],
         canvasColor: const Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -43,7 +55,7 @@ class MyApp extends StatelessWidget {
       // home: const CategoriesScreen(),
       routes: {
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
-        CategoryMealScreen.routeName: (context) => CategoryMealScreen(),
+        CategoryMealScreen.routeName: (context) => const CategoryMealScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
