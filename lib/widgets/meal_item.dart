@@ -59,33 +59,36 @@ class MealItem extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15)),
-                  child: Image.network(
-                    imgUrl,
-                    height: 250,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, imageChunkEvent) {
-                      // print(imageChunkEvent?.expectedTotalBytes!.toString());
-                      // print("\n" +
-                      //     (imageChunkEvent?.cumulativeBytesLoaded).toString());
-                      // Future.delayed(const Duration(seconds: 1), () {
-                      //   print("bruh");
-                      // });
-                      return imageChunkEvent == null
-                          ? child
-                          : SizedBox(
-                              height: 250,
-                              child: Center(
-                                child: CircularProgressIndicator.adaptive(
-                                  strokeWidth: 1,
-                                  semanticsLabel: "Loading",
-                                  value:
-                                      (imageChunkEvent.cumulativeBytesLoaded /
-                                          imageChunkEvent.expectedTotalBytes!),
+                  child: Hero(
+                    tag: id,
+                    child: Image.network(
+                      imgUrl,
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, imageChunkEvent) {
+                        // print(imageChunkEvent?.expectedTotalBytes!.toString());
+                        // print("\n" +
+                        //     (imageChunkEvent?.cumulativeBytesLoaded).toString());
+                        // Future.delayed(const Duration(seconds: 1), () {
+                        //   print("bruh");
+                        // });
+                        return imageChunkEvent == null
+                            ? child
+                            : SizedBox(
+                                height: 250,
+                                child: Center(
+                                  child: CircularProgressIndicator.adaptive(
+                                    strokeWidth: 1,
+                                    semanticsLabel: "Loading",
+                                    value: (imageChunkEvent
+                                            .cumulativeBytesLoaded /
+                                        imageChunkEvent.expectedTotalBytes!),
+                                  ),
                                 ),
-                              ),
-                            );
-                    },
+                              );
+                      },
+                    ),
                   ),
                 ),
                 Positioned(

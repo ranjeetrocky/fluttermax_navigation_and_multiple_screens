@@ -47,6 +47,12 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'RobotoCondensed',
                 fontWeight: FontWeight.bold,
               ),
+              headline4: const TextStyle(
+                fontSize: 20,
+                // fontFamily: 'Raleway',
+                fontFamily: 'RobotoCondensed',
+                fontWeight: FontWeight.bold,
+              ),
             ),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
