@@ -13,33 +13,55 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  final List<Map<String, Object>> _pages = [
+    {'page': CategoriesScreen(), 'title': "Daily Meals"},
+    {'page': FavouriteScreen(), 'title': "Your Favourite"},
+  ];
+  int _selectedPageIndex = 0;
+  void _selectPage(int index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Daily Meals'),
-          actions: [
-            Tooltip(
-                message: 'Change Color',
-                child: IconButton(
-                    onPressed: widget.changeColor,
-                    icon: const Icon(Icons.refresh_rounded)))
-          ],
-          bottom: const TabBar(
-            tabs: [
-              Tab(
-                  icon: Icon(Icons.restaurant_menu_outlined),
-                  text: 'Categories'),
-              Tab(icon: Icon(Icons.star_border), text: 'Favourites')
-            ],
-          ),
-        ),
-        body: const TabBarView(children: [
-          CategoriesScreen(),
-          FavouriteScreen(),
-        ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_pages[_selectedPageIndex]['title'] as String),
+        actions: [
+          Tooltip(
+              message: 'Change Color',
+              child: IconButton(
+                  onPressed: widget.changeColor,
+                  icon: const Icon(Icons.refresh_rounded)))
+        ],
+      ),
+      body: _pages[_selectedPageIndex]['page'] as Widget,
+      bottomNavigationBar: NavigationBarTheme(
+        // data: Theme.of(context).navigationBarTheme.copyWith(
+        //     indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
+        //     backgroundColor: Theme.of(context).colorScheme.surfaceVariant),
+        // data: Theme.of(context).navigationBarTheme,
+        data: Theme.of(context).navigationBarTheme.copyWith(
+            labelTextStyle: MaterialStateProperty.all(
+                const TextStyle(fontSize: 13, fontWeight: FontWeight.w700))),
+        child: NavigationBar(
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            selectedIndex: _selectedPageIndex,
+            onDestinationSelected: _selectPage,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.restaurant_outlined),
+                selectedIcon: Icon(Icons.restaurant_rounded),
+                label: "Categories",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.star_border),
+                selectedIcon: Icon(Icons.star),
+                label: "Favourites",
+              ),
+            ]),
       ),
     );
   }
