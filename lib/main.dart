@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/categories_screen.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/category_meal_screen.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/screens/meal_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
         appBarTheme: const AppBarTheme(
+          centerTitle: true,
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         ),
@@ -56,6 +58,7 @@ class MyApp extends StatelessWidget {
       routes: {
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
         CategoryMealScreen.routeName: (context) => const CategoryMealScreen(),
+        MealDetailScreen.routeName: (context) => const MealDetailScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

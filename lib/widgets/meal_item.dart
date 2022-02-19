@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/models/meal.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
-  final String title, imgUrl;
+  final String title, imgUrl, id;
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
   const MealItem({
     Key? key,
+    required this.id,
     required this.title,
     required this.imgUrl,
     required this.duration,
@@ -36,7 +38,9 @@ class MealItem extends StatelessWidget {
     }
   }
 
-  void _selectMeal() {}
+  void _selectMeal(context) {
+    Navigator.of(context).pushNamed(MealDetailScreen.routeName, arguments: id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,7 @@ class MealItem extends StatelessWidget {
       elevation: 4,
       margin: const EdgeInsets.all(10),
       child: InkWell(
-        onTap: _selectMeal,
+        onTap: () => _selectMeal(context),
         borderRadius: BorderRadius.circular(15),
         child: Column(
           children: [
