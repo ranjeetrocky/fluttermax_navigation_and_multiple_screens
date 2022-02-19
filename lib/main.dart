@@ -60,6 +60,25 @@ class MyApp extends StatelessWidget {
         CategoryMealScreen.routeName: (context) => const CategoryMealScreen(),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
       },
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+        // if(settings.name == '/meal-detail'){
+        //   return ...;
+        // }else if(settings.name == '/something-else'){
+        //   return ...;
+        // }
+        //for dynamically generate routes in web
+        return MaterialPageRoute(
+          builder: (context) => const CategoriesScreen(),
+        );
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const CategoriesScreen(),
+        );
+
+        ///for making 404 page in flutter web
+      },
       debugShowCheckedModeBanner: false,
     );
   }
