@@ -10,6 +10,7 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           "Daily Meals",
           // style: Theme.of(context).textTheme.headline6,
