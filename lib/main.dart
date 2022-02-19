@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/categories_screen.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/screens/category_meal_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
                   ?.copyWith(fontFamily: 'Raleway'),
               headline5: const TextStyle(
                 fontSize: 20,
+                color: Colors.white,
                 // fontFamily: 'Raleway',
                 fontFamily: 'RobotoCondensed',
                 fontWeight: FontWeight.bold,
@@ -38,7 +40,11 @@ class MyApp extends StatelessWidget {
               SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         ),
       ),
-      home: const CategoriesScreen(),
+      // home: const CategoriesScreen(),
+      routes: {
+        '/': (context) => const CategoriesScreen(),
+        '/category-meals': (context) => CategoryMealScreen(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
