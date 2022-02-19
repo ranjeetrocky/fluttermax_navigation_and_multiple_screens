@@ -20,17 +20,41 @@ const themeSeedColors = [
   Colors.purple
 ];
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Color? _seedColor;
   // This widget is the root of your application.
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _seedColor = themeSeedColors[Random().nextInt(7)];
+  }
+
+  void _changeColor() {
+    setState(() {
+      _seedColor = themeSeedColors[Random().nextInt(7)];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Navigation & Multiple Screen Demo',
+      darkTheme: ThemeData(
+        colorSchemeSeed: _seedColor,
+        brightness: Brightness.dark,
+        // listTileTheme: const ListTileThemeData(textColor: Colors.black),
+      ),
       theme: ThemeData(
         // primarySwatch: Colors.pink,
-        colorSchemeSeed: themeSeedColors[Random().nextInt(7)],
+        colorSchemeSeed: _seedColor,
         canvasColor: const Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -62,7 +86,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: const CategoriesScreen(),
       routes: {
-        CategoriesScreen.routeName: (context) => const CategoriesScreen(),
+        CategoriesScreen.routeName: (context) =>
+            CategoriesScreen(changeColor: _changeColor),
         CategoryMealScreen.routeName: (context) => const CategoryMealScreen(),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
       },
@@ -75,12 +100,16 @@ class MyApp extends StatelessWidget {
         // }
         //for dynamically generate routes in web
         return MaterialPageRoute(
-          builder: (context) => const CategoriesScreen(),
+          builder: (context) => CategoriesScreen(
+            changeColor: _changeColor,
+          ),
         );
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => const CategoriesScreen(),
+          builder: (context) => CategoriesScreen(
+            changeColor: _changeColor,
+          ),
         );
 
         ///for making 404 page in flutter web

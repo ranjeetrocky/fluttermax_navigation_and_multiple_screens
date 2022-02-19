@@ -30,24 +30,27 @@ class MealDetailScreen extends StatelessWidget {
           ),
           _sectionTitle(context, 'Ingredients'),
           _sectionContainer(
+              context: context,
               child: ListView.builder(
-            itemBuilder: (context, index) {
-              return Card(
-                child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(selectedMeal.ingredients[index])),
-              );
-            },
-            itemCount: selectedMeal.ingredients.length,
-          )),
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: Text(selectedMeal.ingredients[index])),
+                  );
+                },
+                itemCount: selectedMeal.ingredients.length,
+              )),
           _sectionTitle(context, "Steps"),
           _sectionContainer(
+            context: context,
             child: ListView.separated(
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor,
                     child: Text('# ${index + 1}'),
                   ),
                   title: Text(selectedMeal.steps[index]),
@@ -61,11 +64,12 @@ class MealDetailScreen extends StatelessWidget {
     );
   }
 
-  Expanded _sectionContainer({required child}) {
+  Expanded _sectionContainer({required child, required BuildContext context}) {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          // color: Colors.white,
+          color: Theme.of(context).backgroundColor,
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(15),
         ),

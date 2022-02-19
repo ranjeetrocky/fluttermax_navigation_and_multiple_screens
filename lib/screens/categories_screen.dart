@@ -3,8 +3,10 @@ import 'package:fluttermax_navigation_and_multiple_screens/dummy_data.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/widgets/category_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
+  final VoidCallback changeColor;
   static const routeName = '/';
-  const CategoriesScreen({Key? key}) : super(key: key);
+  const CategoriesScreen({Key? key, required this.changeColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,13 @@ class CategoriesScreen extends StatelessWidget {
           "Daily Meals",
           // style: Theme.of(context).textTheme.headline6,
         ),
+        actions: [
+          Tooltip(
+              message: 'Change Color',
+              child: IconButton(
+                  onPressed: changeColor,
+                  icon: const Icon(Icons.refresh_rounded)))
+        ],
       ),
       body: GridView(
         padding: const EdgeInsets.all(20),
