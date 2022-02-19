@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/models/category.dart';
 
-const kDummyCategory = [
+const kDummyCategories = [
   Category(
     id: 'c1',
     title: 'Italian',
