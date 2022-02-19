@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/dummy_data.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/widgets/meal_item.dart';
 
 class CategoryMealScreen extends StatelessWidget {
   static const routeName = '/category-meals';
@@ -20,7 +21,14 @@ class CategoryMealScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return Text(categoryMeals[index].title);
+          final meal = categoryMeals[index];
+          return MealItem(
+            title: meal.title,
+            imgUrl: meal.imageUrl,
+            duration: meal.duration,
+            complexity: meal.complexity,
+            affordability: meal.affordability,
+          );
         },
         itemCount: categoryMeals.length,
       ),
