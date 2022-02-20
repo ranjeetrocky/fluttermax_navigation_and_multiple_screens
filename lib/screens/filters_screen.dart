@@ -62,18 +62,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
       appBar: AppBar(
         title: const Text('Filters'),
         actions: [
-          IconButton(
-            onPressed: () {
-              widget.saveFilterSettings({
-                'glutenFree': _isGlutenFree,
-                'vegan': _isVegan,
-                'vegetarian': _isVegetarian,
-                'lactoseFree': _isLactoseFree,
-              });
-              Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
-            },
-            icon: const Icon(Icons.save_outlined),
-          ),
           Tooltip(
             message: _isPlatformChanged ? 'Change to Android' : 'Change to iOS',
             child: IconButton(
@@ -178,6 +166,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+        },
+        child: const Tooltip(
+            message: 'Exit without Closing',
+            child: Icon(FontAwesomeIcons.home)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
