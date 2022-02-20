@@ -161,12 +161,20 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ],
           ),
           ElevatedButton.icon(
-            onPressed: () {},
             icon: const Icon(FontAwesomeIcons.save),
             label: const Text(
               "Save & Exit",
               style: TextStyle(fontSize: 20, fontFamily: "RobotoCondensed"),
             ),
+            onPressed: () {
+              widget.saveFilterSettings({
+                'glutenFree': _isGlutenFree,
+                'vegan': _isVegan,
+                'vegetarian': _isVegetarian,
+                'lactoseFree': _isLactoseFree,
+              });
+              Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+            },
           )
         ],
       ),
