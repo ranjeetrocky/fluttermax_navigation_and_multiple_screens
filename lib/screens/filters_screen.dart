@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/screens/tabs_screen.dart';
 import '../widgets/main_drawer.dart';
 
 class FiltersScreen extends StatefulWidget {
   static const String routeName = "/filters-screen";
-  const FiltersScreen({Key? key}) : super(key: key);
+  final Function saveFilterSettings;
+  final Map<String, bool> currentFilters;
+  const FiltersScreen(
+      {Key? key,
+      required this.saveFilterSettings,
+      required this.currentFilters})
+      : super(key: key);
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -16,6 +23,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _isVegan = false;
   var _isVegetarian = false;
   var _isLactoseFree = false;
+  @override
+  void initState() {
+    super.initState();
+    _isGlutenFree = widget.currentFilters['glutenFree'] as bool;
+    _isVegan = widget.currentFilters['vegan'] as bool;
+    _isVegetarian = widget.currentFilters['vegetarian'] as bool;
+    _isLactoseFree = widget.currentFilters['lactoseFree'] as bool;
+  }
+
   Widget _settingListTile({
     required String titleText,
     required String description,
@@ -33,7 +49,23 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Filters')),
+      appBar: AppBar(
+        title: const Text('Filters'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                widget.saveFilterSettings({
+                  'glutenFree': _isGlutenFree,
+                  'vegan': _isVegan,
+                  'vegetarian': _isVegetarian,
+                  'lactoseFree': _isLactoseFree,
+                });
+                Navigator.of(context)
+                    .pushReplacementNamed(TabsScreen.routeName);
+              },
+              icon: const Icon(Icons.save_outlined))
+        ],
+      ),
       drawer: const MainDrawer(),
       body: Column(
         mainAxisSize: MainAxisSize.max,
