@@ -1,3 +1,4 @@
+import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/tabs_screen.dart';
 import '../widgets/main_drawer.dart';
@@ -5,11 +6,13 @@ import '../widgets/main_drawer.dart';
 class FiltersScreen extends StatefulWidget {
   static const String routeName = "/filters-screen";
   final Function saveFilterSettings;
+  final VoidCallback changePlatform;
   final Map<String, bool> currentFilters;
   const FiltersScreen(
       {Key? key,
       required this.saveFilterSettings,
-      required this.currentFilters})
+      required this.currentFilters,
+      required this.changePlatform})
       : super(key: key);
 
   @override
@@ -23,6 +26,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _isVegan = false;
   var _isVegetarian = false;
   var _isLactoseFree = false;
+  var _isPlatformChanged = false;
   @override
   void initState() {
     super.initState();
@@ -53,17 +57,35 @@ class _FiltersScreenState extends State<FiltersScreen> {
         title: const Text('Filters'),
         actions: [
           IconButton(
+            onPressed: () {
+              widget.saveFilterSettings({
+                'glutenFree': _isGlutenFree,
+                'vegan': _isVegan,
+                'vegetarian': _isVegetarian,
+                'lactoseFree': _isLactoseFree,
+              });
+              Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+            },
+            icon: const Icon(Icons.save_outlined),
+          ),
+          Tooltip(
+            message: _isPlatformChanged ? 'Change to Android' : 'Change to iOS',
+            child: IconButton(
               onPressed: () {
-                widget.saveFilterSettings({
-                  'glutenFree': _isGlutenFree,
-                  'vegan': _isVegan,
-                  'vegetarian': _isVegetarian,
-                  'lactoseFree': _isLactoseFree,
-                });
-                Navigator.of(context)
-                    .pushReplacementNamed(TabsScreen.routeName);
+                widget.changePlatform();
+                setState(
+                  () {
+                    _isPlatformChanged = !_isPlatformChanged;
+                  },
+                );
               },
-              icon: const Icon(Icons.save_outlined))
+              icon: Icon(
+                _isPlatformChanged
+                    ? FontAwesomeIcons.android
+                    : FontAwesomeIcons.apple,
+              ),
+            ),
+          ),
         ],
       ),
       drawer: const MainDrawer(),

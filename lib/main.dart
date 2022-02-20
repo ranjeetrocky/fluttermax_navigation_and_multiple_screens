@@ -23,7 +23,7 @@ const themeSeedColors = [
   Colors.blueGrey,
   Colors.purple
 ];
-const platform = TargetPlatform.iOS;
+var platform = TargetPlatform.android;
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -76,6 +76,16 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _changePlateform() {
+    setState(() {
+      if (platform == TargetPlatform.android) {
+        platform = TargetPlatform.iOS;
+      } else {
+        platform = TargetPlatform.android;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -125,13 +135,18 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
-        TabsScreen.routeName: (context) =>
-            TabsScreen(changeColor: _changeColor),
+        TabsScreen.routeName: (context) => TabsScreen(
+              changeColor: _changeColor,
+              changePlatform: _changePlateform,
+            ),
         CategoryMealScreen.routeName: (context) =>
             CategoryMealScreen(availableMeals: _availableMeals),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
         FiltersScreen.routeName: (context) => FiltersScreen(
-            currentFilters: _currentFilters, saveFilterSettings: _setFilters),
+              currentFilters: _currentFilters,
+              saveFilterSettings: _setFilters,
+              changePlatform: _changePlateform,
+            ),
       },
       onGenerateRoute: (settings) {
         print(settings.arguments);
@@ -142,12 +157,18 @@ class _MyAppState extends State<MyApp> {
         // }
         //for dynamically generate routes in web
         return MaterialPageRoute(
-          builder: (context) => TabsScreen(changeColor: _changeColor),
+          builder: (context) => TabsScreen(
+            changeColor: _changeColor,
+            changePlatform: _changePlateform,
+          ),
         );
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => TabsScreen(changeColor: _changeColor),
+          builder: (context) => TabsScreen(
+            changeColor: _changeColor,
+            changePlatform: _changePlateform,
+          ),
         );
 
         ///for making 404 page in flutter web

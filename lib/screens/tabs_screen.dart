@@ -3,18 +3,22 @@ import '../widgets/main_drawer.dart';
 import 'categories_screen.dart';
 import 'favourite_screen.dart';
 import 'filters_screen.dart';
+import 'package:awesome_icons/awesome_icons.dart';
 
 class TabsScreen extends StatefulWidget {
   static const String routeName = '/';
 
-  final VoidCallback changeColor;
-  const TabsScreen({Key? key, required this.changeColor}) : super(key: key);
+  final VoidCallback changeColor, changePlatform;
+  const TabsScreen(
+      {Key? key, required this.changeColor, required this.changePlatform})
+      : super(key: key);
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  var _isPlatformChanged = false;
   final List<Map<String, Object>> _pages = [
     {'page': const CategoriesScreen(), 'title': "Daily Meals"},
     {'page': const FavouriteScreen(), 'title': "Your Favourite"},
@@ -38,6 +42,22 @@ class _TabsScreenState extends State<TabsScreen> {
             child: IconButton(
               onPressed: widget.changeColor,
               icon: const Icon(Icons.refresh_rounded),
+            ),
+          ),
+          Tooltip(
+            message: _isPlatformChanged ? 'Change to Android' : 'Change to iOS',
+            child: IconButton(
+              onPressed: () {
+                widget.changePlatform();
+                setState(() {
+                  _isPlatformChanged = !_isPlatformChanged;
+                });
+              },
+              icon: Icon(
+                _isPlatformChanged
+                    ? FontAwesomeIcons.android
+                    : FontAwesomeIcons.apple,
+              ),
             ),
           ),
         ],
