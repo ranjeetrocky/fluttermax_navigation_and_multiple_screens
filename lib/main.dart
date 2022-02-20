@@ -23,7 +23,7 @@ const themeSeedColors = [
   Colors.blueGrey,
   Colors.purple
 ];
-var platform = TargetPlatform.android;
+var currentPlatform = TargetPlatform.android;
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -78,10 +78,10 @@ class _MyAppState extends State<MyApp> {
 
   void _changePlateform() {
     setState(() {
-      if (platform == TargetPlatform.android) {
-        platform = TargetPlatform.iOS;
+      if (currentPlatform == TargetPlatform.android) {
+        currentPlatform = TargetPlatform.iOS;
       } else {
-        platform = TargetPlatform.android;
+        currentPlatform = TargetPlatform.android;
       }
     });
   }
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         useMaterial3: true,
         cardTheme: const CardTheme(elevation: 20),
-        platform: platform,
+        platform: currentPlatform,
         // listTileTheme: const ListTileThemeData(textColor: Colors.black),
       ),
       theme: ThemeData(
@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
         colorSchemeSeed: _seedColor,
         canvasColor: const Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
-        platform: platform,
+        platform: currentPlatform,
         textTheme: ThemeData.light().textTheme.copyWith(
               bodyText1: const TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
               bodyText2: const TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
@@ -136,6 +136,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
         TabsScreen.routeName: (context) => TabsScreen(
+              platform: currentPlatform,
               changeColor: _changeColor,
               changePlatform: _changePlateform,
             ),
@@ -143,6 +144,7 @@ class _MyAppState extends State<MyApp> {
             CategoryMealScreen(availableMeals: _availableMeals),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
         FiltersScreen.routeName: (context) => FiltersScreen(
+              platform: currentPlatform,
               currentFilters: _currentFilters,
               saveFilterSettings: _setFilters,
               changePlatform: _changePlateform,
@@ -158,6 +160,7 @@ class _MyAppState extends State<MyApp> {
         //for dynamically generate routes in web
         return MaterialPageRoute(
           builder: (context) => TabsScreen(
+            platform: currentPlatform,
             changeColor: _changeColor,
             changePlatform: _changePlateform,
           ),
@@ -166,6 +169,7 @@ class _MyAppState extends State<MyApp> {
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
           builder: (context) => TabsScreen(
+            platform: currentPlatform,
             changeColor: _changeColor,
             changePlatform: _changePlateform,
           ),

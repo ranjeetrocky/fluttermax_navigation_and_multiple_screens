@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/tabs_screen.dart';
@@ -7,12 +9,14 @@ class FiltersScreen extends StatefulWidget {
   static const String routeName = "/filters-screen";
   final Function saveFilterSettings;
   final VoidCallback changePlatform;
+  final TargetPlatform platform;
   final Map<String, bool> currentFilters;
   const FiltersScreen(
       {Key? key,
       required this.saveFilterSettings,
       required this.currentFilters,
-      required this.changePlatform})
+      required this.changePlatform,
+      required this.platform})
       : super(key: key);
 
   @override
@@ -52,6 +56,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _isPlatformChanged =
+        widget.platform == TargetPlatform.android ? false : true;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filters'),

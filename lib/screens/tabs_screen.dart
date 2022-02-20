@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../widgets/main_drawer.dart';
 import 'categories_screen.dart';
@@ -9,8 +11,12 @@ class TabsScreen extends StatefulWidget {
   static const String routeName = '/';
 
   final VoidCallback changeColor, changePlatform;
+  final TargetPlatform platform;
   const TabsScreen(
-      {Key? key, required this.changeColor, required this.changePlatform})
+      {Key? key,
+      required this.changeColor,
+      required this.changePlatform,
+      required this.platform})
       : super(key: key);
 
   @override
@@ -32,6 +38,8 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _isPlatformChanged =
+        widget.platform == TargetPlatform.android ? false : true;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
