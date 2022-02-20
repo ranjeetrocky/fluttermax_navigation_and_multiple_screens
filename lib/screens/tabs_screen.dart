@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttermax_navigation_and_multiple_screens/widgets/main_drawer.dart';
+import '../widgets/main_drawer.dart';
 import 'categories_screen.dart';
 import 'favourite_screen.dart';
+import 'filters_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   static const String routeName = '/';
@@ -67,6 +68,13 @@ class _TabsScreenState extends State<TabsScreen> {
                 label: "Favourites",
               ),
             ]),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.settings_outlined),
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+        },
       ),
     );
   }
