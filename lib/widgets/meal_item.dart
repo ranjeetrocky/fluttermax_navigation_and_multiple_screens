@@ -46,7 +46,6 @@ class MealItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 4,
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () => _selectMeal(context),
@@ -57,47 +56,47 @@ class MealItem extends StatelessWidget {
               children: [
                 Hero(
                   tag: id,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15)),
-                    child: Image.network(
-                      imgUrl,
-                      height: 250,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, imageChunkEvent) {
-                        // print(imageChunkEvent?.expectedTotalBytes!.toString());
-                        // print("\n" +
-                        //     (imageChunkEvent?.cumulativeBytesLoaded).toString());
-                        // Future.delayed(const Duration(seconds: 1), () {
-                        //   print("bruh");
-                        // });
-                        return imageChunkEvent == null
-                            ? child
-                            : SizedBox(
-                                height: 250,
-                                child: Center(
-                                  child: CircularProgressIndicator.adaptive(
-                                    strokeWidth: 1,
-                                    semanticsLabel: "Loading",
-                                    value: (imageChunkEvent
-                                            .cumulativeBytesLoaded /
-                                        imageChunkEvent.expectedTotalBytes!),
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        imgUrl,
+                        height: 250,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, imageChunkEvent) {
+                          // print(imageChunkEvent?.expectedTotalBytes!.toString());
+                          // print("\n" +
+                          //     (imageChunkEvent?.cumulativeBytesLoaded).toString());
+                          // Future.delayed(const Duration(seconds: 1), () {
+                          //   print("bruh");
+                          // });
+                          return imageChunkEvent == null
+                              ? child
+                              : SizedBox(
+                                  height: 250,
+                                  child: Center(
+                                    child: CircularProgressIndicator.adaptive(
+                                      strokeWidth: 1,
+                                      semanticsLabel: "Loading",
+                                      value: (imageChunkEvent
+                                              .cumulativeBytesLoaded /
+                                          imageChunkEvent.expectedTotalBytes!),
+                                    ),
                                   ),
-                                ),
-                              );
-                      },
+                                );
+                        },
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
                     child: Container(
+                  margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   height: 250,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15)),
+                    borderRadius: BorderRadius.circular(15),
                     gradient: LinearGradient(colors: [
                       Colors.black.withAlpha(210),
                       Colors.black.withAlpha(0),
@@ -106,6 +105,7 @@ class MealItem extends StatelessWidget {
                 )),
                 Positioned(
                   bottom: 0,
+                  left: 10,
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     width: 382.8,
