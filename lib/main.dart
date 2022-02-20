@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import './screens/filters_screen.dart';
 import './screens/categories_screen.dart';
 import './screens/category_meal_screen.dart';
 import './screens/meal_detail_screen.dart';
@@ -95,6 +96,7 @@ class _MyAppState extends State<MyApp> {
             TabsScreen(changeColor: _changeColor),
         CategoryMealScreen.routeName: (context) => const CategoryMealScreen(),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
+        FiltersScreen.routeName: (context) => const FiltersScreen(),
       },
       onGenerateRoute: (settings) {
         print(settings.arguments);
