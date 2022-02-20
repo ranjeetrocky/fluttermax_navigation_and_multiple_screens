@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/widgets/main_drawer.dart';
 import 'categories_screen.dart';
 import 'favourite_screen.dart';
 
@@ -28,15 +29,19 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(_pages[_selectedPageIndex]['title'] as String),
         actions: [
           Tooltip(
-              message: 'Change Color',
-              child: IconButton(
-                  onPressed: widget.changeColor,
-                  icon: const Icon(Icons.refresh_rounded)))
+            message: 'Change Color',
+            child: IconButton(
+              onPressed: widget.changeColor,
+              icon: const Icon(Icons.refresh_rounded),
+            ),
+          ),
         ],
       ),
+      drawer: MainDrawer(),
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: NavigationBarTheme(
         // data: Theme.of(context).navigationBarTheme.copyWith(

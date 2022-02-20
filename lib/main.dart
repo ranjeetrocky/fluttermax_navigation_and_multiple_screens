@@ -52,11 +52,13 @@ class _MyAppState extends State<MyApp> {
         colorSchemeSeed: _seedColor,
         brightness: Brightness.dark,
         useMaterial3: true,
+        cardTheme: const CardTheme(elevation: 20),
         // listTileTheme: const ListTileThemeData(textColor: Colors.black),
       ),
       theme: ThemeData(
         // primarySwatch: Colors.pink,
         useMaterial3: true,
+        cardTheme: const CardTheme(elevation: 20),
         colorSchemeSeed: _seedColor,
         canvasColor: const Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
