@@ -98,6 +98,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         // crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             padding: const EdgeInsets.all(16),
@@ -158,6 +159,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 },
               ),
             ],
+          ),
+          ElevatedButton.icon(
+            onPressed: () {},
+            icon: const Icon(FontAwesomeIcons.save),
+            label: const Text(
+              "Save & Exit",
+              style: TextStyle(fontSize: 20, fontFamily: "RobotoCondensed"),
+            ),
           )
         ],
       ),
