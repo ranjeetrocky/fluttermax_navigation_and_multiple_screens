@@ -20,6 +20,7 @@ class CategoryMealScreen extends StatelessWidget {
         title: Text(categoryTitle),
       ),
       body: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final meal = categoryMeals[index];
           return MealItem(
