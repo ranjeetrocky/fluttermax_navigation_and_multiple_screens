@@ -2,20 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/models/meal.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/screens/meal_detail_screen.dart';
 
+typedef RemoveItemFunctionBluePrint = void Function(String mealId);
+
 class MealItem extends StatelessWidget {
   final String title, imgUrl, id;
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  const MealItem({
-    Key? key,
-    required this.id,
-    required this.title,
-    required this.imgUrl,
-    required this.duration,
-    required this.complexity,
-    required this.affordability,
-  }) : super(key: key);
+  final RemoveItemFunctionBluePrint? removeItemFunction;
+
+  const MealItem(
+      {Key? key,
+      required this.id,
+      required this.title,
+      required this.imgUrl,
+      required this.duration,
+      required this.complexity,
+      required this.affordability,
+      required this.removeItemFunction})
+      : super(key: key);
   String get complexityText {
     switch (complexity) {
       case Complexity.Simple:
@@ -39,7 +44,13 @@ class MealItem extends StatelessWidget {
   }
 
   void _selectMeal(context) {
-    Navigator.of(context).pushNamed(MealDetailScreen.routeName, arguments: id);
+    Navigator.of(context)
+        .pushNamed(MealDetailScreen.routeName, arguments: id)
+        .then((value) {
+      if (value != null) {
+        removeItemFunction!(value as String);
+      }
+    });
   }
 
   @override
@@ -127,32 +138,17 @@ class MealItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.attach_money),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text(affordabilityText)
-                    ],
+                  MealItemDataLabel(
+                    icon: Icons.attach_money,
+                    label: affordabilityText,
                   ),
-                  Row(
-                    children: [
-                      const Icon(Icons.work_outline_rounded),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text(complexityText)
-                    ],
+                  MealItemDataLabel(
+                    icon: Icons.work_outline_rounded,
+                    label: complexityText,
                   ),
-                  Row(
-                    children: [
-                      const Icon(Icons.schedule),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text('$duration min')
-                    ],
+                  MealItemDataLabel(
+                    icon: Icons.schedule,
+                    label: '$duration min',
                   ),
                 ],
               ),
@@ -160,6 +156,29 @@ class MealItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MealItemDataLabel extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  const MealItemDataLabel({
+    Key? key,
+    required this.icon,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon),
+        const SizedBox(
+          width: 6,
+        ),
+        Text(label)
+      ],
     );
   }
 }
