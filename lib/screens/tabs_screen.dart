@@ -1,6 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:fluttermax_navigation_and_multiple_screens/widgets/meal_item.dart';
+import '../models/meal.dart';
 import '../widgets/main_drawer.dart';
 import 'categories_screen.dart';
 import 'favourite_screen.dart';
@@ -12,12 +12,14 @@ class TabsScreen extends StatefulWidget {
 
   final VoidCallback changeColor, changePlatform;
   final TargetPlatform platform;
-  const TabsScreen(
-      {Key? key,
-      required this.changeColor,
-      required this.changePlatform,
-      required this.platform})
-      : super(key: key);
+  final List<Meal> favouriteMeals;
+  const TabsScreen({
+    Key? key,
+    required this.changeColor,
+    required this.changePlatform,
+    required this.platform,
+    required this.favouriteMeals,
+  }) : super(key: key);
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
@@ -25,15 +27,27 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   var _isPlatformChanged = false;
-  final List<Map<String, Object>> _pages = [
-    {'page': const CategoriesScreen(), 'title': "Daily Meals"},
-    {'page': const FavouriteScreen(), 'title': "Your Favourite"},
-  ];
+  List<Map<String, Object>>? _pages;
   int _selectedPageIndex = 0;
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pages = [
+      {'page': const CategoriesScreen(), 'title': "Daily Meals"},
+      {
+        'page': FavouriteScreen(
+          favouriteMeals: widget.favouriteMeals,
+        ),
+        'title': "Your Favourite"
+      },
+    ];
   }
 
   @override
@@ -43,7 +57,7 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(_pages[_selectedPageIndex]['title'] as String),
+        title: Text(_pages?[_selectedPageIndex]['title'] as String),
         actions: [
           Tooltip(
             message: 'Change Color',
@@ -71,7 +85,7 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: _pages[_selectedPageIndex]['page'] as Widget,
+      body: _pages?[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: NavigationBarTheme(
         // data: Theme.of(context).navigationBarTheme.copyWith(
         //     indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -87,12 +101,12 @@ class _TabsScreenState extends State<TabsScreen> {
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.restaurant_outlined),
-                selectedIcon: Icon(Icons.restaurant_rounded),
+                selectedIcon: Icon(FontAwesomeIcons.utensils),
                 label: "Categories",
               ),
               NavigationDestination(
-                icon: Icon(Icons.star_border),
-                selectedIcon: Icon(Icons.star),
+                icon: Icon(FontAwesomeIcons.heart),
+                selectedIcon: Icon(FontAwesomeIcons.solidHeart),
                 label: "Favourites",
               ),
             ]),

@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
     'lactoseFree': false,
   };
   List<Meal> _availableMeals = kDummyMeals;
+  List<Meal> _favouriteMeals = [];
   void _setFilters(Map<String, bool> newFilterSettings) {
     setState(() {
       _currentFilters = newFilterSettings;
@@ -84,6 +85,22 @@ class _MyAppState extends State<MyApp> {
         currentPlatform = TargetPlatform.android;
       }
     });
+  }
+
+  void _toggleFavourite(String mealId) {
+    final existingIndex =
+        _favouriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favouriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      _favouriteMeals.add(kDummyMeals.firstWhere((meal) => meal.id == mealId));
+    }
+  }
+
+  bool _isFavourite(String mealId) {
+    return _favouriteMeals.any((meal) => meal.id == mealId);
   }
 
   @override
@@ -136,13 +153,17 @@ class _MyAppState extends State<MyApp> {
       routes: {
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
         TabsScreen.routeName: (context) => TabsScreen(
+              favouriteMeals: _favouriteMeals,
               platform: currentPlatform,
               changeColor: _changeColor,
               changePlatform: _changePlateform,
             ),
         CategoryMealScreen.routeName: (context) =>
             CategoryMealScreen(availableMeals: _availableMeals),
-        MealDetailScreen.routeName: (context) => const MealDetailScreen(),
+        MealDetailScreen.routeName: (context) => MealDetailScreen(
+              selectFavouriteFunction: _toggleFavourite,
+              isFavourite: _isFavourite,
+            ),
         FiltersScreen.routeName: (context) => FiltersScreen(
               platform: currentPlatform,
               currentFilters: _currentFilters,
@@ -160,6 +181,7 @@ class _MyAppState extends State<MyApp> {
         //for dynamically generate routes in web
         return MaterialPageRoute(
           builder: (context) => TabsScreen(
+            favouriteMeals: _favouriteMeals,
             platform: currentPlatform,
             changeColor: _changeColor,
             changePlatform: _changePlateform,
@@ -169,6 +191,7 @@ class _MyAppState extends State<MyApp> {
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
           builder: (context) => TabsScreen(
+            favouriteMeals: _favouriteMeals,
             platform: currentPlatform,
             changeColor: _changeColor,
             changePlatform: _changePlateform,

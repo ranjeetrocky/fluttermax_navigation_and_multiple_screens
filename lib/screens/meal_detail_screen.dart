@@ -1,16 +1,46 @@
+import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermax_navigation_and_multiple_screens/dummy_data.dart';
 
-class MealDetailScreen extends StatelessWidget {
+class MealDetailScreen extends StatefulWidget {
   static const String routeName = '/meal_detail_screen';
-  const MealDetailScreen({Key? key}) : super(key: key);
+  final Function selectFavouriteFunction, isFavourite;
 
+  const MealDetailScreen(
+      {Key? key,
+      required this.selectFavouriteFunction,
+      required this.isFavourite})
+      : super(key: key);
+
+  @override
+  State<MealDetailScreen> createState() => _MealDetailScreenState();
+}
+
+class _MealDetailScreenState extends State<MealDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context)?.settings.arguments;
     final selectedMeal = kDummyMeals.firstWhere((meal) => meal.id == mealId);
     return Scaffold(
-      appBar: AppBar(title: Text(selectedMeal.title)),
+      appBar: AppBar(
+        title: Text(selectedMeal.title),
+        actions: [
+          Tooltip(
+            message: widget.isFavourite(mealId) ? "Remove Meal" : "Add meal",
+            child: IconButton(
+              icon: Icon(widget.isFavourite(mealId)
+                  ? FontAwesomeIcons.solidHeart
+                  : FontAwesomeIcons.heart),
+              onPressed: () {
+                setState(() {
+                  widget.selectFavouriteFunction(mealId);
+                  Navigator.of(context).pop(mealId);
+                });
+              },
+            ),
+          )
+        ],
+      ),
       body: Column(
         children: [
           Container(

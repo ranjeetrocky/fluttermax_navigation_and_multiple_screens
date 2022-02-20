@@ -19,7 +19,7 @@ class MealItem extends StatelessWidget {
       required this.duration,
       required this.complexity,
       required this.affordability,
-      required this.removeItemFunction})
+      this.removeItemFunction})
       : super(key: key);
   String get complexityText {
     switch (complexity) {
@@ -47,7 +47,7 @@ class MealItem extends StatelessWidget {
     Navigator.of(context)
         .pushNamed(MealDetailScreen.routeName, arguments: id)
         .then((value) {
-      if (value != null) {
+      if (value != null && removeItemFunction != null) {
         removeItemFunction!(value as String);
       }
     });
